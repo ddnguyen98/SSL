@@ -9,7 +9,8 @@ class AppController{
 
         //$this->db = new PDO("mysql:dbname=".$config["dbname"].";",$config["dbuser"],$config["dbpass"]);
       
-        $this->urlPathParts = $urlPathParts;
+        $this-> urlPathParts = $urlPathParts;
+        $this-> nav = array("home"=>"/home","api"=>"/api","crud"=>"/crud");
 
 
         if ($urlPathParts[0]) {
