@@ -1,0 +1,1 @@
+{"virtualbox":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"D:/Fullsail/Month 18/SSL","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/Fullsail/Month 18/SSL","disabled":false,"__vagrantfile":true}}}
