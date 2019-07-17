@@ -1,6 +1,3 @@
-
-<html>
-
 <?php
     echo '<div class="container">';
     echo '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec lectus commodo, laoreet urna quis, vulputate ante.
@@ -10,4 +7,3 @@
 
 ?>
 
-</html>
