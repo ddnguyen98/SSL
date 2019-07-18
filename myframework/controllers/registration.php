@@ -9,9 +9,18 @@
         }
 
         public function index(){
-            $this->parent->getView("navigation", $this->parent);
-            $this->parent->getView("form");
-            $this->parent->getView("footer");
+            if(@$_SESSION["isloggedin"] && $_SESSION["isloggedin"] == "1"){
+                header("location:/profile");
+
+            }
+            else{
+                $random = substr( md5(rand()), 0, 7);
+                $_SESSION["captcha"] = $random;
+                $this->parent->getView("navigation", $this->parent);
+                $this->parent->getView("form");
+                $this->parent->getView("captcha", array("cap" => $random));
+                $this->parent->getView("footer");
+            }
         }
 
 
@@ -40,6 +49,43 @@
             $this->parent->getView("footer");
         }
 
+        public function captchaLogin(){
+            if($_POST["email"] != "" && $_POST["password"] != ""){
+                if($_POST["email"] == "test@test.com" && $_POST["password"] == '1234' && $_POST["captcha"] == $_SESSION["captcha"]){
+                    $_SESSION["isloggedin"] = "1";
+                    $_SESSION["email"] = $_POST["email"];
+
+                    header("location:/profile");
+                }
+                else{
+
+                    header("location:/registration?msg=Bad login");
+                }
+            }
+        }
+
+        public function formlogin(){
+
+            if($_POST["email"] != "" && $_POST["password"] != ""){
+                if($_POST["email"] == "test@test.com" && $_POST["password"] == "1234"){
+                    $_SESSION["isloggedin"] = "1";  
+                    $_SESSION["email"] = $_POST["email"];
+
+                    header("location:/profile");
+                }
+                else{
+                    $_SESSION["isloggedin"] = "0";
+                    $_SESSION["email"] = "";
+
+                    header("location:/registration");
+                }
+            }
+            else{
+
+            }
+        }
+
+
         public function ajaxPars(){
             //var_dump($_REQUEST);
             $this->parent->getView("navigation", $this->parent);
@@ -51,5 +97,7 @@
             }
             $this->parent->getView("footer");
         }
-    }
+    }  
+
 ?>
+

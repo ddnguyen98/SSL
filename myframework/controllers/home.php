@@ -7,10 +7,14 @@
             $this->parent=$parent;
             //var_dump($this->parent);
 
+        }
+
+        public function index(){
             $this->parent->getView("navigation", $this->parent);
             $this->parent->getView("body");
             $this->parent->getView("day3-v1");
             $this->parent->getView("footer");
         }
     }
+
 ?>

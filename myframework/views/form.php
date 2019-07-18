@@ -1,5 +1,5 @@
 <div class="container">
-    <form method="POST"  action="/registration/getinfo">
+    <form method="POST"  action="/registration/formlogin">
     <div class="form-group">
         <label for="email">Username</label>
         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -43,3 +43,6 @@
     <button type="button" class="btn btn-secondary" id="ajaxBtn">Ajax Submit</button>
     </form>
 </div>
+
+
+

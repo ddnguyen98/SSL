@@ -28,15 +28,20 @@
               <?php
                   //Checks through navigation data
                   foreach($data->nav as $key=>$link){
-                  $style = "";
-                  //Checks current page name and if it matches it adds a style of green to signify current page
-                  if($key == $data->urlPathParts[0]){
-                      $style = "style='font-weight:bold'";
+                    $style = "";
+                    //Checks current page name and if it matches it adds a style of green to signify current page
+                    if($key == $data->urlPathParts[0]){
+                        $style = "style='font-weight:bold'";
+                    }
+                    //Echo link for page
+                      echo "<li class='nav-item'>
+                      <a class='nav-link' href='".$link."'".$style.">".strtoupper($key)."</a>
+                      </li>";
                   }
-                  //Echo link for page
-                  echo "<li class='nav-item'>
-                  <a class='nav-link' href='".$link."'".$style.">".strtoupper($key)."</a>
-                  </li>";
+                  if(@$_SESSION["isloggedin"] && $_SESSION["isloggedin"] == 1){
+                    echo "<li class='nav-item'>
+                    <a class='nav-link' href='/profile'>Profile</a>
+                    </li>";
                   }
               ?>
           </ul>
