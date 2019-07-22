@@ -23,7 +23,8 @@
 
         public function logout(){
             $_SESSION["isloggedin"] = "0";
-            $_SESSION["email"] = "test@test.com";
+            $_SESSION["email"] = "";
+            $_SESSION["bio"] = '';
 
             header("location:/registration");
         }

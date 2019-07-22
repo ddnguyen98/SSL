@@ -50,7 +50,6 @@
         <div>";
         create_image($data["cap"]);
         echo $data["cap"];
-
         echo "<img src='/assets/image1.png'>";
 
 

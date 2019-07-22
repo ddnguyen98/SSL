@@ -9,11 +9,14 @@
         }
 
         public function index(){
+
             if(@$_SESSION["isloggedin"] && $_SESSION["isloggedin"] == "1"){
                 header("location:/profile");
-
             }
             else{
+                $_SESSION["isloggedin"] = "0";
+                $_SESSION["email"] = "";
+
                 $random = substr( md5(rand()), 0, 7);
                 $_SESSION["captcha"] = $random;
                 $this->parent->getView("navigation", $this->parent);
@@ -51,14 +54,25 @@
 
         public function captchaLogin(){
             if($_POST["email"] != "" && $_POST["password"] != ""){
-                if($_POST["email"] == "test@test.com" && $_POST["password"] == '1234' && $_POST["captcha"] == $_SESSION["captcha"]){
-                    $_SESSION["isloggedin"] = "1";
-                    $_SESSION["email"] = $_POST["email"];
-
-                    header("location:/profile");
+                $wrong = true;
+                for ($i=1; $i < 3 ; $i++) { 
+                    $myfile = fopen("assets/user".$i.".txt", "r") or die("Unable to open file!");
+                    $content= fgets($myfile);
+                    $exploded = explode("|", $content);
+                    
+                    if(strtolower($_POST["email"]) == strtolower($exploded[0]) && $_POST["password"] == $exploded[1] && $_POST["captcha"] == $_SESSION["captcha"]){
+                        $wrong = false;
+                        $_SESSION["isloggedin"] = "1";
+                        $_SESSION["bio"] = $exploded[2];
+                        $_SESSION["email"] = $_POST["email"];
+                        
+                        header("location:/profile");
+                    }
                 }
-                else{
-
+                if($wrong == true){
+                    $_SESSION["isloggedin"] = "0";
+                    $_SESSION["email"] = "";
+    
                     header("location:/registration?msg=Bad login");
                 }
             }
@@ -82,6 +96,15 @@
             }
             else{
 
+            }
+        }
+
+        public function upload(){
+
+            if (move_uploaded_file($_FILES["myfile"]["tmp_name"], "myfile.jpg")) {
+                echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
             }
         }
 
