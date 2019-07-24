@@ -20,8 +20,9 @@
                 $random = substr( md5(rand()), 0, 7);
                 $_SESSION["captcha"] = $random;
                 $this->parent->getView("navigation", $this->parent);
-                $this->parent->getView("form");
-                $this->parent->getView("captcha", array("cap" => $random));
+                //$this->parent->getView("form");
+                //$this->parent->getView("captcha", array("cap" => $random));
+                $this->parent->getView("dbLogin");
                 $this->parent->getView("footer");
             }
         }
@@ -75,6 +76,27 @@
     
                     header("location:/registration?msg=Bad login");
                 }
+            }
+        }
+
+        public function dbLogin(){
+            if($_POST["email"] != "" && $_POST["password"] != ""){
+                $data = $this->parent->getModel("users")->select(
+                    "select * from users where email = :email and password = :password",
+                    array(":email"=>$_POST["email"],":password"=>sha1($_POST["password"])));
+                if(@$data){
+                    $_SESSION["isloggedin"] = "1";    
+                    $_SESSION["email"] = $_POST["email"];
+                    header("location:/profile");
+                }
+                else{
+                    $_SESSION["isloggedin"] = "0";    
+                    header("location:/registration?msg=Bad login");
+                } 
+            }
+            else{
+                $_SESSION["isloggedin"] = "0";
+                header("location:/registration?msg=Bad login");
             }
         }
 
